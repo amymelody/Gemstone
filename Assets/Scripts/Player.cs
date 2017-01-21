@@ -8,9 +8,13 @@ public class Player : MonoBehaviour
     [SerializeField]
     PlayerSettings m_PlayerSettings;
 
+    [SerializeField]
+    EmotionWave m_WavePrefab;
+
     void Update()
     {
         UpdateMovement();
+        CheckForActionInput();
     }
 
     void UpdateMovement()
@@ -19,5 +23,19 @@ public class Player : MonoBehaviour
             += new Vector3(Input.GetAxis(k_InputAxisHorizontal), Input.GetAxis(k_InputAxisVertical), 0f) 
             * m_PlayerSettings.movementSpeed
             * Time.deltaTime;
+    }
+
+    void CheckForActionInput()
+    {
+        if (Input.GetKeyDown(m_PlayerSettings.sendWaveKey))
+        {
+            SendEmotionWave();
+        }
+    }
+
+    void SendEmotionWave()
+    {
+        var wave = Instantiate(m_WavePrefab);
+        wave.transform.position = transform.position;
     }
 }
