@@ -3,6 +3,7 @@
 [CreateAssetMenu(fileName = "EmotionSettings", menuName = "Settings/EmotionSettings")]
 public class EmotionSettings : ScriptableObject
 {
+    [Header("Colors")]
     [SerializeField]
     Color m_NeutralColor;
 
@@ -18,6 +19,19 @@ public class EmotionSettings : ScriptableObject
     [SerializeField]
     Color m_AfraidColor;
 
+    [Header("Wave Prefabs")]
+    [SerializeField]
+    EmotionWave m_HappyWavePrefab;
+
+    [SerializeField]
+    EmotionWave m_SadWavePrefab;
+
+    [SerializeField]
+    EmotionWave m_AngryWavePrefab;
+
+    [SerializeField]
+    EmotionWave m_AfraidWavePrefab;
+
     public Color GetColorFromEmotion(Emotion emotion)
     {
         switch (emotion)
@@ -32,5 +46,19 @@ public class EmotionSettings : ScriptableObject
                 return m_AfraidColor;
         }
         return m_NeutralColor;
+    }
+
+    public EmotionWave GetWavePrefabFromEmotion(Emotion emotion)
+    {
+        switch (emotion)
+        {
+            case Emotion.Happy:
+                return m_HappyWavePrefab;
+            case Emotion.Sad:
+                return m_SadWavePrefab;
+            case Emotion.Angry:
+                return m_AngryWavePrefab;
+        }
+        return m_AfraidWavePrefab;
     }
 }

@@ -9,12 +9,31 @@ public class Player : MonoBehaviour
     PlayerSettings m_PlayerSettings;
 
     [SerializeField]
-    EmotionWave m_WavePrefab;
+    EmotionSettings m_EmotionSettings;
+
+    [SerializeField]
+    Emotion m_InitialEmotion;
+
+    [SerializeField]
+    SpriteRenderer m_Renderer;
+
+    Emotion m_Emotion;
+
+    void Awake()
+    {
+        ChangeEmotion(m_InitialEmotion);
+    }
 
     void Update()
     {
         UpdateMovement();
         CheckForActionInput();
+    }
+
+    void ChangeEmotion(Emotion emotion)
+    {
+        m_Emotion = emotion;
+        m_Renderer.color = m_EmotionSettings.GetColorFromEmotion(m_Emotion);
     }
 
     void UpdateMovement()
@@ -35,7 +54,7 @@ public class Player : MonoBehaviour
 
     void SendEmotionWave()
     {
-        var wave = Instantiate(m_WavePrefab);
+        var wave = Instantiate(m_EmotionSettings.GetWavePrefabFromEmotion(m_Emotion));
         wave.transform.position = transform.position;
     }
 }
