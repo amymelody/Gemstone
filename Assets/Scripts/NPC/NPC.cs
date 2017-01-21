@@ -24,7 +24,8 @@ public class NPC : MonoBehaviour
         m_Behaviours = new Dictionary<Emotion, NPCBehaviour>
         {
             { Emotion.Neutral, new NPCNeutralBehaviour(transform, m_NPCSettings) },
-            { Emotion.Happy, new NPCHappyBehaviour(transform, m_NPCSettings) }
+            { Emotion.Happy, new NPCHappyBehaviour(transform, m_NPCSettings) },
+            { Emotion.Sad, new NPCSadBehaviour(transform, m_NPCSettings) }
         };
         ChangeEmotion(m_InitialEmotion);
     }
