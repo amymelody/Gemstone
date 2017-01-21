@@ -25,6 +25,11 @@ public class NPC : MonoBehaviour
     NPCBehaviour m_CurrentBehaviour;
     Emotion m_Emotion;
 
+    public void Deserialize(JSONObject jsonObject)
+    {
+        // Set transform.position, m_InitialEmotion, m_WaveRatePowerLevel, and m_WaveDistancePowerLevel here
+    }
+
     void Start()
     {
         m_Behaviours = new Dictionary<Emotion, NPCBehaviour>
@@ -39,11 +44,6 @@ public class NPC : MonoBehaviour
     void Update()
     {
         UpdateMovement();
-    }
-
-    void Deserialize(JSONObject jsonObject)
-    {
-        // Set transform.position, m_InitialEmotion, m_WaveRatePowerLevel, and m_WaveDistancePowerLevel here
     }
 
     void ChangeEmotion(Emotion emotion)

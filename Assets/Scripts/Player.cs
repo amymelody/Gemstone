@@ -19,6 +19,11 @@ public class Player : MonoBehaviour
 
     Emotion m_Emotion;
 
+    public void Deserialize(JSONObject jsonObject)
+    {
+        // Set transform.position and m_InitialEmotion here
+    }
+
     void Start()
     {
         ChangeEmotion(m_InitialEmotion);
@@ -28,11 +33,6 @@ public class Player : MonoBehaviour
     {
         UpdateMovement();
         CheckForActionInput();
-    }
-
-    void Deserialize(JSONObject jsonObject)
-    {
-        // Set transform.position and m_InitialEmotion here
     }
 
     void ChangeEmotion(Emotion emotion)
