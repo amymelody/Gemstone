@@ -15,11 +15,17 @@ public class NPC : MonoBehaviour
     [SerializeField]
     SpriteRenderer m_Renderer;
 
+    [SerializeField]
+    int m_WaveRatePowerLevel;
+
+    [SerializeField]
+    int m_WaveDistancePowerLevel;
+
     Dictionary<Emotion, NPCBehaviour> m_Behaviours;
     NPCBehaviour m_CurrentBehaviour;
     Emotion m_Emotion;
 
-    void Awake()
+    void Start()
     {
         m_Behaviours = new Dictionary<Emotion, NPCBehaviour>
         {
@@ -33,6 +39,11 @@ public class NPC : MonoBehaviour
     void Update()
     {
         UpdateMovement();
+    }
+
+    void Deserialize(JSONObject jsonObject)
+    {
+        // Set transform.position, m_InitialEmotion, m_WaveRatePowerLevel, and m_WaveDistancePowerLevel here
     }
 
     void ChangeEmotion(Emotion emotion)
