@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
-public class NPCNeutralBehaviour : MonoBehaviour, INPCBehaviour
+public class NPCNeutralBehaviour : NPCBehaviour
 {
-    public void UpdateMovement()
+    public override void UpdatePosition()
     {
+    }
 
+    public NPCNeutralBehaviour(Transform transform, NPCSettings npcSettings) : base(transform, npcSettings)
+    {
     }
 }

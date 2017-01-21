@@ -1,40 +1,30 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-[RequireComponent(typeof(NPCNeutralBehaviour), typeof(NPCHappyBehaviour), typeof(NPCSadBehaviour))]
-[RequireComponent(typeof(NPCAngryBehaviour), typeof(NPCAfraidBehaviour))]
 public class NPC : MonoBehaviour
 {
     [SerializeField]
+    NPCSettings m_NPCSettings;
+
+    [SerializeField]
     Emotion m_InitialEmotion;
 
-    INPCBehaviour m_Behaviour;
+    Dictionary<Emotion, NPCBehaviour> m_Behaviours;
+    NPCBehaviour m_CurrentBehaviour;
     Emotion m_Emotion;
 
     public void ChangeEmotion(Emotion emotion)
     {
         m_Emotion = emotion;
-        switch(m_Emotion)
-        {
-            case Emotion.Happy:
-                m_Behaviour = GetComponent<NPCHappyBehaviour>();
-                break;
-            case Emotion.Sad:
-                m_Behaviour = GetComponent<NPCSadBehaviour>();
-                break;
-            case Emotion.Angry:
-                m_Behaviour = GetComponent<NPCAngryBehaviour>();
-                break;
-            case Emotion.Afraid:
-                m_Behaviour = GetComponent<NPCAfraidBehaviour>();
-                break;
-            default:
-                m_Behaviour = GetComponent<NPCNeutralBehaviour>();
-                break;
-        }
+        m_CurrentBehaviour = m_Behaviours[m_Emotion];
     }
 
     void Awake()
     {
+        m_Behaviours = new Dictionary<Emotion, NPCBehaviour>
+        {
+            { Emotion.Neutral, new NPCNeutralBehaviour(transform, m_NPCSettings) }
+        };
         ChangeEmotion(m_InitialEmotion);
     }
 
@@ -45,6 +35,6 @@ public class NPC : MonoBehaviour
 
     void UpdateMovement()
     {
-        m_Behaviour.UpdateMovement();
+        m_CurrentBehaviour.UpdatePosition();
     }
 }
