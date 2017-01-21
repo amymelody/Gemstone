@@ -9,6 +9,11 @@ public class EmotionWave : MonoBehaviour
     [SerializeField]
     float m_MaxDeltaScale;
 
+    [SerializeField]
+    Emotion m_Emotion;
+
+    public Emotion emotion { get { return m_Emotion; } }
+
     void Awake()
     {
         StartCoroutine(Grow());
