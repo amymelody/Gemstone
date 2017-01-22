@@ -62,6 +62,10 @@ public class Player : MonoBehaviour, IEntity
 
     void SendEmotionWave()
     {
-        EmotionWave.CreateFromSource(transform, m_EmotionSettings.GetWavePrefabFromEmotion(m_Emotion));
+        EmotionWave.CreateFromSource(
+            transform,
+            m_EmotionSettings.GetWavePrefabFromEmotion(m_Emotion),
+            m_PlayerSettings.waveScaleRate,
+            m_PlayerSettings.waveMaxDeltaScale);
     }
 }

@@ -14,11 +14,13 @@ public class EmotionWave : MonoBehaviour
 
     Transform m_Source;
     
-    public static void CreateFromSource(Transform source, EmotionWave prefab)
+    public static void CreateFromSource(Transform source, EmotionWave prefab, float scaleRate, float maxDeltaScale)
     {
         var wave = Instantiate(prefab);
         wave.transform.position = source.position;
         wave.m_Source = source;
+        wave.m_ScaleRate = scaleRate;
+        wave.m_MaxDeltaScale = maxDeltaScale;
         if (wave.m_ScaleRate <= 1f)
         {
             wave.m_ScaleRate = 1f + Mathf.Epsilon;

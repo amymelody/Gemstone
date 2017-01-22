@@ -16,9 +16,11 @@ public class NPC : MonoBehaviour, IEntity
     SpriteRenderer m_Renderer;
 
     [SerializeField]
+    [Range(1, 3)]
     int m_WaveRatePowerLevel;
 
     [SerializeField]
+    [Range(1, 3)]
     int m_WaveDistancePowerLevel;
 
     Dictionary<Emotion, NPCBehaviour> m_Behaviours;
@@ -64,7 +66,11 @@ public class NPC : MonoBehaviour, IEntity
     {
         if (m_Emotion != Emotion.Neutral)
         {
-            EmotionWave.CreateFromSource(transform, m_EmotionSettings.GetWavePrefabFromEmotion(m_Emotion));
+            EmotionWave.CreateFromSource(
+                transform,
+                m_EmotionSettings.GetWavePrefabFromEmotion(m_Emotion),
+                m_NPCSettings.waveScaleRate,
+                m_NPCSettings.waveMaxDeltaScale * m_WaveDistancePowerLevel);
         }
     }
 }
