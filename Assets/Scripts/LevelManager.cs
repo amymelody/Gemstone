@@ -7,10 +7,10 @@ public class LevelManager : MonoBehaviour
     const KeyCode k_ResetKey = KeyCode.R;
 
     [SerializeField]
-    int m_WinStateNumNPCs;
+    public int m_WinStateNumNPCs;
 
     [SerializeField]
-    Emotion m_WinStateEmotion;
+    public Emotion m_WinStateEmotion;
 
     Dictionary<Emotion, int> m_NumNPCsWithEmotion = new Dictionary<Emotion, int>
     {
