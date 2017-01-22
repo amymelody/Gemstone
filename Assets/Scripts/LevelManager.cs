@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -20,9 +21,12 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     Text m_Text;
 
+    [SerializeField]
+    AudioSource m_WinAudio;
+
     public GameManager m_GameManager;
 
-    bool m_LevelLoaded;
+    public bool m_LevelLoaded;
 
     Dictionary<Emotion, int> m_NumNPCsWithEmotion = new Dictionary<Emotion, int>
     {
@@ -40,14 +44,26 @@ public class LevelManager : MonoBehaviour
 
     public void OnNPCEmotionChange(Emotion oldEmotion, Emotion newEmotion)
     {
-        m_NumNPCsWithEmotion[oldEmotion] = m_NumNPCsWithEmotion[oldEmotion] - 1;
-        m_NumNPCsWithEmotion[newEmotion] = m_NumNPCsWithEmotion[newEmotion] + 1;
-        if (m_NumNPCsWithEmotion[m_WinStateEmotion] >= m_WinStateNumNPCs && m_LevelLoaded)
+        if (m_LevelLoaded)
         {
-            // Win condition stuff here. Go to next level.
-            m_LevelLoaded = false;
-            m_GameManager.LoadNextLevel();
+            m_NumNPCsWithEmotion[oldEmotion] = m_NumNPCsWithEmotion[oldEmotion] - 1;
+            m_NumNPCsWithEmotion[newEmotion] = m_NumNPCsWithEmotion[newEmotion] + 1;
+            if (m_NumNPCsWithEmotion[m_WinStateEmotion] >= m_WinStateNumNPCs)
+            {
+                // Win condition stuff here. Go to next level.
+                m_LevelLoaded = false;
+                m_Text.text = "Success!";
+                StartCoroutine(PlayWinAudio());
+            }
         }
+    }
+
+    IEnumerator PlayWinAudio()
+    {
+        m_WinAudio.Play();
+        while (m_WinAudio.isPlaying)
+            yield return null;
+        m_GameManager.LoadNextLevel();
     }
 
     public void LoadLevel(Transform levelParent, JSONObject playerJSONObj, JSONObject npcsJSONObj, JSONObject obstaclesJSONobj)

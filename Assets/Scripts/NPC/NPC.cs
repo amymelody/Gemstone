@@ -74,7 +74,7 @@ public class NPC : MonoBehaviour, IEntity
     {
         m_LevelManager.RegisterNPC(m_Emotion);
         ChangeEmotion(m_InitialEmotion);
-        InvokeRepeating("SendEmotionWave", m_NPCSettings.baseDelayBetweenWaves, m_NPCSettings.baseDelayBetweenWaves);
+        InvokeRepeating("SendEmotionWave", 0.5f + RNG.RandomFloat() * 2f, m_NPCSettings.baseDelayBetweenWaves);
     }
 
     void Update()
@@ -89,7 +89,7 @@ public class NPC : MonoBehaviour, IEntity
 
     void SendEmotionWave()
     {
-        if (m_Emotion != Emotion.Neutral)
+        if (m_Emotion != Emotion.Neutral && m_LevelManager.m_LevelLoaded)
         {
             EmotionWave.CreateFromSource(
                 transform,
