@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {
@@ -15,6 +16,11 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField]
     NPC m_NPCPrefab;
+
+    [SerializeField]
+    Text m_Text;
+
+    bool m_InWinState;
 
     Dictionary<Emotion, int> m_NumNPCsWithEmotion = new Dictionary<Emotion, int>
     {
@@ -34,15 +40,21 @@ public class LevelManager : MonoBehaviour
     {
         m_NumNPCsWithEmotion[oldEmotion] = m_NumNPCsWithEmotion[oldEmotion] - 1;
         m_NumNPCsWithEmotion[newEmotion] = m_NumNPCsWithEmotion[newEmotion] + 1;
-        if (m_NumNPCsWithEmotion[m_WinStateEmotion] >= m_WinStateNumNPCs)
+        if (m_NumNPCsWithEmotion[m_WinStateEmotion] >= m_WinStateNumNPCs && !m_InWinState)
         {
             // Win condition stuff here. Go to next level.
             Debug.Log("WIN STATE");
+            m_InWinState = true;
         }
     }
 
     public void LoadLevel(Transform levelParent, JSONObject playerJSONObj, JSONObject npcsJSONObj, JSONObject obstaclesJSONobj)
     {
+        m_InWinState = false;
+
+        m_Text.gameObject.SetActive(true);
+        m_Text.text = "Make " + m_WinStateNumNPCs + " Neurons " + m_WinStateEmotion;
+
         m_NumNPCsWithEmotion = new Dictionary<Emotion, int>
         {
             { Emotion.Neutral, 0 },

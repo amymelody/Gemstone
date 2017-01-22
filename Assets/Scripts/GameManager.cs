@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     PlayerSettings m_PlayerSettings;
 
     [SerializeField]
-    LevelManager m_LevelManagerPrefab;
+    LevelManager m_LevelManager;
 
     [SerializeField]
     string m_LevelJSONsFolder = "Levels";
@@ -29,9 +29,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     string[] m_LevelJSONs;
 
+    [SerializeField]
+    Text m_IntroText;
+
     GameState m_GameState;
     JSONObject[] m_LevelJSONObjects;
-    LevelManager m_LevelManager;
     int m_CurrentLevel = -1;
     Transform m_LevelParentTransform;
 
@@ -45,7 +47,6 @@ public class GameManager : MonoBehaviour
                 Application.streamingAssetsPath + Path.DirectorySeparatorChar
                 + m_LevelJSONsFolder + Path.DirectorySeparatorChar + m_LevelJSONs[i]));
         }
-        m_LevelManager = Instantiate(m_LevelManagerPrefab);
     }
 
     void Update()
@@ -64,6 +65,8 @@ public class GameManager : MonoBehaviour
     IEnumerator LoadFirstLevel()
     {
         m_GameState = GameState.Level;
+
+        m_IntroText.gameObject.SetActive(false);
 
         SceneManager.LoadScene(k_LevelSceneName);
         var scene = SceneManager.GetSceneByName(k_LevelSceneName);

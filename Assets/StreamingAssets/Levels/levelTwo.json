@@ -1,0 +1,47 @@
+{
+	"levelSize": {
+		"x": 30,
+		"y": 20
+	},
+	"winCon": {
+		"emotion": "sad",
+		"number": 1
+	},
+	"player": {
+		"x": 1,
+		"y": 10,
+		"emotion": "sad"
+	},
+	"NPCArray": [
+		{
+			"x": 15,
+			"y": 2,
+			"emotion": "happy",
+			"power": 2,
+			"frequency": 2
+		},
+		{
+			"x": 15,
+			"y": 10,
+			"emotion": "happy",
+			"power": 3,
+			"frequency": 3
+		},
+		{
+			"x": 15,
+			"y": 18,
+			"emotion": "sad",
+			"power": 2,
+			"frequency": 2
+		},
+		{
+			"x": 25,
+			"y": 10,
+			"emotion": "neutral",
+			"power": 2,
+			"frequency": 2
+		}
+	],
+	"Obstacle": [
+	]
+}

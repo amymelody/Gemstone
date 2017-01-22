@@ -72,9 +72,9 @@ public class NPC : MonoBehaviour, IEntity
 
     void Start()
     {
+        m_LevelManager.RegisterNPC(m_Emotion);
         ChangeEmotion(m_InitialEmotion);
         InvokeRepeating("SendEmotionWave", m_NPCSettings.baseDelayBetweenWaves, m_NPCSettings.baseDelayBetweenWaves);
-        m_LevelManager.RegisterNPC(m_Emotion);
     }
 
     void Update()

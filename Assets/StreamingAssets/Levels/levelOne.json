@@ -5,11 +5,11 @@
 	},
 	"winCon": {
 		"emotion": "happy",
-		"number": 2
+		"number": 3
 	},
 	"player": {
 		"x": 15,
-		"y": 17,
+		"y": 3,
 		"emotion": "happy"
 	},
 	"NPCArray": [
@@ -17,22 +17,24 @@
 			"x": 29,
 			"y": 1,
 			"emotion": "sad",
-			"power": 2,
-			"frequency": 2
+			"power": 1,
+			"frequency": 1
+		},
+		{
+			"x": 1,
+			"y": 1,
+			"emotion": "happy",
+			"power": 3,
+			"frequency": 3
 		},
 		{
 			"x": 29,
 			"y": 19,
-			"emotion": "sad",
-			"power": 2,
-			"frequency": 2
+			"emotion": "happy",
+			"power": 3,
+			"frequency": 3
 		}
 	],
 	"Obstacle": [
-		{
-			"x":10,
-			"y":10,
-			"type": "block"
-		}
 	]
 }
