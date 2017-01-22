@@ -14,22 +14,22 @@
 	},
 	"NPCArray": [
 		{
-			"x": 29,
-			"y": 1,
+			"x": 25,
+			"y": 5,
 			"emotion": "sad",
 			"power": 1,
 			"frequency": 1
 		},
 		{
-			"x": 1,
-			"y": 1,
+			"x": 5,
+			"y": 5,
 			"emotion": "happy",
 			"power": 3,
 			"frequency": 3
 		},
 		{
-			"x": 29,
-			"y": 19,
+			"x": 25,
+			"y": 15,
 			"emotion": "happy",
 			"power": 3,
 			"frequency": 3
