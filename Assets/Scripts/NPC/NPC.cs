@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class NPC : MonoBehaviour
+public class NPC : MonoBehaviour, IEntity
 {
     [SerializeField]
     NPCSettings m_NPCSettings;
@@ -25,6 +25,13 @@ public class NPC : MonoBehaviour
     NPCBehaviour m_CurrentBehaviour;
     Emotion m_Emotion;
 
+    public void ChangeEmotion(Emotion emotion)
+    {
+        m_Emotion = emotion;
+        m_CurrentBehaviour = m_Behaviours[m_Emotion];
+        m_Renderer.color = m_EmotionSettings.GetColorFromEmotion(m_Emotion);
+    }
+
     public void Deserialize(JSONObject jsonObject)
     {
         // Set transform.position, m_InitialEmotion, m_WaveRatePowerLevel, and m_WaveDistancePowerLevel here
@@ -39,6 +46,7 @@ public class NPC : MonoBehaviour
             { Emotion.Sad, new NPCSadBehaviour(transform, m_NPCSettings) }
         };
         ChangeEmotion(m_InitialEmotion);
+        InvokeRepeating("SendEmotionWave", m_NPCSettings.baseDelayBetweenWaves, m_NPCSettings.baseDelayBetweenWaves);
     }
 
     void Update()
@@ -46,24 +54,13 @@ public class NPC : MonoBehaviour
         UpdateMovement();
     }
 
-    void ChangeEmotion(Emotion emotion)
-    {
-        m_Emotion = emotion;
-        m_CurrentBehaviour = m_Behaviours[m_Emotion];
-        m_Renderer.color = m_EmotionSettings.GetColorFromEmotion(m_Emotion);
-    }
-
     void UpdateMovement()
     {
         m_CurrentBehaviour.UpdatePosition();
     }
 
-    void OnTriggerEnter2D(Collider2D otherCollider)
+    void SendEmotionWave()
     {
-        var wave = otherCollider.GetComponent<EmotionWave>();
-        if (wave != null)
-        {
-            ChangeEmotion(wave.emotion);
-        }
+        EmotionWave.CreateFromSource(transform, m_EmotionSettings.GetWavePrefabFromEmotion(m_Emotion));
     }
 }

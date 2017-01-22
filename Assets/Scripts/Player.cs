@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IEntity
 {
     const string k_InputAxisHorizontal = "Horizontal";
     const string k_InputAxisVertical = "Vertical";
@@ -19,6 +19,12 @@ public class Player : MonoBehaviour
 
     Emotion m_Emotion;
 
+    public void ChangeEmotion(Emotion emotion)
+    {
+        m_Emotion = emotion;
+        m_Renderer.color = m_EmotionSettings.GetColorFromEmotion(m_Emotion);
+    }
+
     public void Deserialize(JSONObject jsonObject)
     {
         // Set transform.position and m_InitialEmotion here
@@ -33,12 +39,6 @@ public class Player : MonoBehaviour
     {
         UpdateMovement();
         CheckForActionInput();
-    }
-
-    void ChangeEmotion(Emotion emotion)
-    {
-        m_Emotion = emotion;
-        m_Renderer.color = m_EmotionSettings.GetColorFromEmotion(m_Emotion);
     }
 
     void UpdateMovement()
@@ -59,7 +59,6 @@ public class Player : MonoBehaviour
 
     void SendEmotionWave()
     {
-        var wave = Instantiate(m_EmotionSettings.GetWavePrefabFromEmotion(m_Emotion));
-        wave.transform.position = transform.position;
+        EmotionWave.CreateFromSource(transform, m_EmotionSettings.GetWavePrefabFromEmotion(m_Emotion));
     }
 }

@@ -12,15 +12,18 @@ public class EmotionWave : MonoBehaviour
     [SerializeField]
     Emotion m_Emotion;
 
-    public Emotion emotion { get { return m_Emotion; } }
-
-    void Awake()
+    Transform m_Source;
+    
+    public static void CreateFromSource(Transform source, EmotionWave prefab)
     {
-        StartCoroutine(Grow());
-        if (m_ScaleRate <= 1f)
+        var wave = Instantiate(prefab);
+        wave.transform.position = source.position;
+        wave.m_Source = source;
+        if (wave.m_ScaleRate <= 1f)
         {
-            m_ScaleRate = 1f + Mathf.Epsilon;
+            wave.m_ScaleRate = 1f + Mathf.Epsilon;
         }
+        wave.StartCoroutine(wave.Grow());
     }
 
     IEnumerator Grow()
@@ -32,5 +35,17 @@ public class EmotionWave : MonoBehaviour
             yield return null;
         }
         Destroy(gameObject);
+    }
+
+    void OnTriggerEnter2D(Collider2D otherCollider)
+    {
+        if (otherCollider.transform != m_Source)
+        {
+            var entity = otherCollider.GetComponent<IEntity>();
+            if (entity != null)
+            {
+                entity.ChangeEmotion(m_Emotion);
+            }
+        }
     }
 }
