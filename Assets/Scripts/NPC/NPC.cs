@@ -42,6 +42,22 @@ public class NPC : MonoBehaviour, IEntity
 
     public void Deserialize(JSONObject jsonObject)
     {
+
+        int posX = 0;
+        int posY = 0;
+        int power = 0;
+        int frequency = 0;
+        string emotion;
+        jsonObject.GetField(out posX, "x", posX);
+        jsonObject.GetField(out posY, "y", posY);
+        jsonObject.GetField(out power, "power", power);
+        jsonObject.GetField(out frequency, "frequency", frequency);
+        jsonObject.GetField(out emotion, "emotion", "happy");
+
+        m_Emotion = (Emotion)System.Enum.Parse(typeof(Emotion), emotion, true);
+        this.transform.position = new Vector3(posX, posY);
+        m_WaveDistancePowerLevel = power;
+        m_WaveRatePowerLevel = frequency;
         // Set transform.position, m_InitialEmotion, m_WaveRatePowerLevel, and m_WaveDistancePowerLevel here
     }
 
