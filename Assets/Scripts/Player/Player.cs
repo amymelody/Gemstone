@@ -28,6 +28,16 @@ public class Player : MonoBehaviour, IEntity
 
     public void Deserialize(JSONObject jsonObject)
     {
+        int posX = 0;
+        int posY = 0;
+        string emotion;
+        jsonObject.GetField(out posX, "x", posX);
+        jsonObject.GetField(out posY, "y", posY);
+        jsonObject.GetField(out emotion, "emotion", "happy");
+
+        m_Emotion = (Emotion) System.Enum.Parse(typeof(Emotion), emotion, true);
+        this.transform.position = new Vector3(posX,posY);
+
         // Set transform.position and m_InitialEmotion here
     }
 
