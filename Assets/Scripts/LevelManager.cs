@@ -26,7 +26,7 @@ public class LevelManager : MonoBehaviour
 
     public GameManager m_GameManager;
 
-    bool m_LevelLoaded;
+    public bool m_LevelLoaded;
 
     Dictionary<Emotion, int> m_NumNPCsWithEmotion = new Dictionary<Emotion, int>
     {
