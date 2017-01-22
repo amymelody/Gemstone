@@ -61,6 +61,9 @@ public class NPC : MonoBehaviour, IEntity
 
     void SendEmotionWave()
     {
-        EmotionWave.CreateFromSource(transform, m_EmotionSettings.GetWavePrefabFromEmotion(m_Emotion));
+        if (m_Emotion != Emotion.Neutral)
+        {
+            EmotionWave.CreateFromSource(transform, m_EmotionSettings.GetWavePrefabFromEmotion(m_Emotion));
+        }
     }
 }
