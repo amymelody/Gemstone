@@ -7,6 +7,7 @@ public abstract class NPCBehaviour
 
     public abstract void InitializeState();
     public abstract void UpdatePosition();
+    public abstract void ChangeMovementDirection();
 
     protected NPCBehaviour(Transform transform, NPCSettings npcSettings)
     {

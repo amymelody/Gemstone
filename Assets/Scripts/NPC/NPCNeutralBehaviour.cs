@@ -13,4 +13,8 @@ public class NPCNeutralBehaviour : NPCBehaviour
     public override void UpdatePosition()
     {
     }
+
+    public override void ChangeMovementDirection()
+    {
+    }
 }

@@ -28,6 +28,11 @@ public class NPCHappyBehaviour : NPCBehaviour
         }
     }
 
+    public override void ChangeMovementDirection()
+    {
+        RandomizeMovementDirection();
+    }
+
     void RandomizeMovementDirection()
     {
         var movementDirection = new Vector3(1f - RNG.RandomFloat() * 2f, 1f - RNG.RandomFloat() * 2f, 0f).normalized;

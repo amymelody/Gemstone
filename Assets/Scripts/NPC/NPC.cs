@@ -98,4 +98,9 @@ public class NPC : MonoBehaviour, IEntity
                 m_NPCSettings.waveMaxDeltaScale * m_WaveDistancePowerLevel);
         }
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        m_CurrentBehaviour.ChangeMovementDirection();
+    }
 }
