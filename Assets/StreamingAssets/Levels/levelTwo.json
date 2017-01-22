@@ -17,8 +17,8 @@
 			"x": 15,
 			"y": 2,
 			"emotion": "happy",
-			"power": 2,
-			"frequency": 2
+			"power": 3,
+			"frequency": 3
 		},
 		{
 			"x": 15,
@@ -30,9 +30,9 @@
 		{
 			"x": 15,
 			"y": 18,
-			"emotion": "sad",
-			"power": 2,
-			"frequency": 2
+			"emotion": "happy",
+			"power": 3,
+			"frequency": 3
 		},
 		{
 			"x": 25,
