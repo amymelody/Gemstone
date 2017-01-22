@@ -4,6 +4,9 @@ using UnityEngine;
 public class NPC : MonoBehaviour, IEntity
 {
     [SerializeField]
+    LevelManager m_LevelManager;
+
+    [SerializeField]
     NPCSettings m_NPCSettings;
 
     [SerializeField]
@@ -29,10 +32,12 @@ public class NPC : MonoBehaviour, IEntity
 
     public void ChangeEmotion(Emotion emotion)
     {
+        var oldEmotion = m_Emotion;
         m_Emotion = emotion;
         m_CurrentBehaviour = m_Behaviours[m_Emotion];
         m_CurrentBehaviour.InitializeState();
         m_Renderer.color = m_EmotionSettings.GetColorFromEmotion(m_Emotion);
+        m_LevelManager.OnNPCEmotionChange(oldEmotion, m_Emotion);
     }
 
     public void Deserialize(JSONObject jsonObject)
@@ -50,6 +55,7 @@ public class NPC : MonoBehaviour, IEntity
         };
         ChangeEmotion(m_InitialEmotion);
         InvokeRepeating("SendEmotionWave", m_NPCSettings.baseDelayBetweenWaves, m_NPCSettings.baseDelayBetweenWaves);
+        m_LevelManager.RegisterNPC(m_Emotion);
     }
 
     void Update()
