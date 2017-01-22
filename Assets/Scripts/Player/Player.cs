@@ -35,17 +35,21 @@ public class Player : MonoBehaviour, IEntity
         jsonObject.GetField(out posY, "y", posY);
         jsonObject.GetField(out emotion, "emotion", "happy");
 
-        m_Emotion = (Emotion)System.Enum.Parse(typeof(Emotion), emotion, true);
+        m_InitialEmotion = (Emotion)System.Enum.Parse(typeof(Emotion), emotion, true);
         this.transform.position = new Vector3(posX, posY);
     }
 
-    void Start()
+    void Awake()
     {
         m_MovementTypes = new Dictionary<Emotion, PlayerMovement>
         {
             { Emotion.Happy, new PlayerHappyMovement(transform, m_PlayerSettings) },
             { Emotion.Sad, new PlayerSadMovement(transform, m_PlayerSettings) }
         };
+    }
+
+    void Start()
+    {
         ChangeEmotion(m_InitialEmotion);
     }
 

@@ -18,6 +18,7 @@ public class EmotionWave : MonoBehaviour
     {
         var wave = Instantiate(prefab);
         wave.transform.position = source.position;
+        wave.transform.SetParent(source.parent, true);
         wave.m_Source = source;
         wave.m_ScaleRate = scaleRate;
         wave.m_MaxDeltaScale = maxDeltaScale;

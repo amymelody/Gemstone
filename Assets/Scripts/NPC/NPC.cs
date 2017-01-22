@@ -4,7 +4,7 @@ using UnityEngine;
 public class NPC : MonoBehaviour, IEntity
 {
     [SerializeField]
-    LevelManager m_LevelManager;
+    public LevelManager m_LevelManager;
 
     [SerializeField]
     NPCSettings m_NPCSettings;
@@ -42,7 +42,6 @@ public class NPC : MonoBehaviour, IEntity
 
     public void Deserialize(JSONObject jsonObject)
     {
-
         int posX = 0;
         int posY = 0;
         int power = 0;
@@ -53,15 +52,15 @@ public class NPC : MonoBehaviour, IEntity
         jsonObject.GetField(out power, "power", power);
         jsonObject.GetField(out frequency, "frequency", frequency);
         jsonObject.GetField(out emotion, "emotion", "happy");
-
-        m_Emotion = (Emotion)System.Enum.Parse(typeof(Emotion), emotion, true);
+        
         this.transform.position = new Vector3(posX, posY);
         m_WaveDistancePowerLevel = power;
         m_WaveRatePowerLevel = frequency;
+        m_InitialEmotion = (Emotion) System.Enum.Parse(typeof(Emotion), emotion, true);
         // Set transform.position, m_InitialEmotion, m_WaveRatePowerLevel, and m_WaveDistancePowerLevel here
     }
 
-    void Start()
+    void Awake()
     {
         m_Behaviours = new Dictionary<Emotion, NPCBehaviour>
         {
@@ -69,6 +68,10 @@ public class NPC : MonoBehaviour, IEntity
             { Emotion.Happy, new NPCHappyBehaviour(transform, m_NPCSettings) },
             { Emotion.Sad, new NPCSadBehaviour(transform, m_NPCSettings) }
         };
+    }
+
+    void Start()
+    {
         ChangeEmotion(m_InitialEmotion);
         InvokeRepeating("SendEmotionWave", m_NPCSettings.baseDelayBetweenWaves, m_NPCSettings.baseDelayBetweenWaves);
         m_LevelManager.RegisterNPC(m_Emotion);

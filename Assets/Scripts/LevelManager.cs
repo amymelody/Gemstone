@@ -4,13 +4,17 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    const KeyCode k_ResetKey = KeyCode.R;
-
     [SerializeField]
     public int m_WinStateNumNPCs;
 
     [SerializeField]
     public Emotion m_WinStateEmotion;
+
+    [SerializeField]
+    Player m_PlayerPrefab;
+
+    [SerializeField]
+    NPC m_NPCPrefab;
 
     Dictionary<Emotion, int> m_NumNPCsWithEmotion = new Dictionary<Emotion, int>
     {
@@ -37,11 +41,38 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    void Update()
+    public void LoadLevel(Transform levelParent, JSONObject playerJSONObj, JSONObject npcsJSONObj, JSONObject obstaclesJSONobj)
     {
-        if (Input.GetKeyDown(k_ResetKey))
+        m_NumNPCsWithEmotion = new Dictionary<Emotion, int>
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            { Emotion.Neutral, 0 },
+            { Emotion.Happy, 0 },
+            { Emotion.Sad, 0 },
+            { Emotion.Angry, 0 },
+            { Emotion.Afraid, 0 },
+        };
+
+        var player = Instantiate(m_PlayerPrefab);
+        player.Deserialize(playerJSONObj);
+        player.transform.SetParent(levelParent, true);
+
+        for (int i = 0; i < npcsJSONObj.Count; ++i)
+        {
+            var npc = Instantiate(m_NPCPrefab);
+            npc.m_LevelManager = this;
+            npc.Deserialize(npcsJSONObj[i]);
+            npc.transform.SetParent(levelParent, true);
         }
+        for (int i = 0; i < obstaclesJSONobj.Count; ++i)
+        {
+            //var obstacle = Instantiate(m_NPCPrefab);
+            //npc.m_LevelManager = this;
+            //npc.Deserialize(npcsJSONObj[i]);
+        }
+    }
+
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
     }
 }

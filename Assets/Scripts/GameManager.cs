@@ -12,19 +12,15 @@ public class GameManager : MonoBehaviour
         Level
     }
 
+    const KeyCode k_ResetKey = KeyCode.R;
     const string k_LevelSceneName = "level";
+    const string k_LevelParentName = "levelParent";
 
     [SerializeField]
     PlayerSettings m_PlayerSettings;
 
     [SerializeField]
     LevelManager m_LevelManagerPrefab;
-
-    [SerializeField]
-    Player m_PlayerPrefab;
-
-    [SerializeField]
-    NPC m_NPCPrefab;
 
     [SerializeField]
     string m_LevelJSONsFolder = "Levels";
@@ -34,6 +30,9 @@ public class GameManager : MonoBehaviour
 
     GameState m_GameState;
     JSONObject[] m_LevelJSONObjects;
+    LevelManager m_LevelManager;
+    int m_CurrentLevel = -1;
+    Transform m_LevelParentTransform;
 
     void Awake()
     {
@@ -45,32 +44,57 @@ public class GameManager : MonoBehaviour
                 Application.dataPath + Path.DirectorySeparatorChar
                 + m_LevelJSONsFolder + Path.DirectorySeparatorChar + m_LevelJSONs[i]));
         }
+        m_LevelManager = Instantiate(m_LevelManagerPrefab);
     }
 
     void Update()
     {
         if (m_GameState == GameState.Intro && Input.GetKeyDown(m_PlayerSettings.sendWaveKey))
         {
-            m_GameState = GameState.Level;
-            StartCoroutine(LoadLevel(0));
+            StartCoroutine(LoadFirstLevel());
+        }
+
+        if (m_GameState == GameState.Level && Input.GetKeyDown(k_ResetKey))
+        {
+            LoadLevel(m_CurrentLevel);
         }
     }
 
-    public IEnumerator LoadLevel(int index)
+    IEnumerator LoadFirstLevel()
     {
+        m_GameState = GameState.Level;
+
         SceneManager.LoadScene(k_LevelSceneName);
         var scene = SceneManager.GetSceneByName(k_LevelSceneName);
         while (!scene.isLoaded)
             yield return null;
 
+        LoadNextLevel();
+    }
+
+    public void LoadNextLevel()
+    {
+        m_CurrentLevel++;
+        LoadLevel(m_CurrentLevel);
+    }
+
+    public void LoadLevel(int index)
+    {
+        if (m_LevelParentTransform != null)
+        {
+            DestroyImmediate(m_LevelParentTransform.gameObject);
+        }
+
+        m_LevelParentTransform = new GameObject(k_LevelParentName).transform;
+
         var levelJSONObject = m_LevelJSONObjects[index];
-        var levelManager = Instantiate(m_LevelManagerPrefab);
         var winConObj = levelJSONObject.GetField("winCon");
         var winConEmotion = "";
         var winConNumber = 0;
         winConObj.GetField(out winConEmotion, "emotion", winConEmotion);
         winConObj.GetField(out winConNumber, "number", winConNumber);
-        levelManager.m_WinStateEmotion = (Emotion)Enum.Parse(typeof(Emotion), winConEmotion, true);
-        levelManager.m_WinStateNumNPCs = winConNumber;
+        m_LevelManager.m_WinStateEmotion = (Emotion)Enum.Parse(typeof(Emotion), winConEmotion, true);
+        m_LevelManager.m_WinStateNumNPCs = winConNumber;
+        m_LevelManager.LoadLevel(m_LevelParentTransform, levelJSONObject.GetField("player"), levelJSONObject.GetField("NPCArray"), levelJSONObject.GetField("Obstacle"));
     }
 }
