@@ -35,10 +35,8 @@ public class Player : MonoBehaviour, IEntity
         jsonObject.GetField(out posY, "y", posY);
         jsonObject.GetField(out emotion, "emotion", "happy");
 
-        m_Emotion = (Emotion) System.Enum.Parse(typeof(Emotion), emotion, true);
-        this.transform.position = new Vector3(posX,posY);
-
-        // Set transform.position and m_InitialEmotion here
+        m_Emotion = (Emotion)System.Enum.Parse(typeof(Emotion), emotion, true);
+        this.transform.position = new Vector3(posX, posY);
     }
 
     void Start()
@@ -72,6 +70,10 @@ public class Player : MonoBehaviour, IEntity
 
     void SendEmotionWave()
     {
-        EmotionWave.CreateFromSource(transform, m_EmotionSettings.GetWavePrefabFromEmotion(m_Emotion));
+        EmotionWave.CreateFromSource(
+            transform,
+            m_EmotionSettings.GetWavePrefabFromEmotion(m_Emotion),
+            m_PlayerSettings.waveScaleRate,
+            m_PlayerSettings.waveMaxDeltaScale);
     }
 }
