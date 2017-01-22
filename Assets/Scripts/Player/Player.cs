@@ -1,10 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Player : MonoBehaviour, IEntity
 {
-    const string k_InputAxisHorizontal = "Horizontal";
-    const string k_InputAxisVertical = "Vertical";
-
     [SerializeField]
     PlayerSettings m_PlayerSettings;
 
@@ -17,11 +15,14 @@ public class Player : MonoBehaviour, IEntity
     [SerializeField]
     SpriteRenderer m_Renderer;
 
+    Dictionary<Emotion, PlayerMovement> m_MovementTypes;
+    PlayerMovement m_CurrentMovement;
     Emotion m_Emotion;
 
     public void ChangeEmotion(Emotion emotion)
     {
         m_Emotion = emotion;
+        m_CurrentMovement = m_MovementTypes[m_Emotion];
         m_Renderer.color = m_EmotionSettings.GetColorFromEmotion(m_Emotion);
     }
 
@@ -32,6 +33,11 @@ public class Player : MonoBehaviour, IEntity
 
     void Start()
     {
+        m_MovementTypes = new Dictionary<Emotion, PlayerMovement>
+        {
+            { Emotion.Happy, new PlayerHappyMovement(transform, m_PlayerSettings) },
+            { Emotion.Sad, new PlayerSadMovement(transform, m_PlayerSettings) }
+        };
         ChangeEmotion(m_InitialEmotion);
     }
 
@@ -43,10 +49,7 @@ public class Player : MonoBehaviour, IEntity
 
     void UpdateMovement()
     {
-        transform.position
-            += new Vector3(Input.GetAxis(k_InputAxisHorizontal), Input.GetAxis(k_InputAxisVertical), 0f) 
-            * m_PlayerSettings.movementSpeed
-            * Time.deltaTime;
+        m_CurrentMovement.UpdatePosition();
     }
 
     void CheckForActionInput()

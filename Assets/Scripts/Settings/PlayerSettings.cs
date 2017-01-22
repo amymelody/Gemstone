@@ -9,6 +9,11 @@ public class PlayerSettings : ScriptableObject
     [SerializeField]
     KeyCode m_SendWaveKey;
 
+    [Header("Sad")]
+    [SerializeField]
+    float m_SadMovementMultiplier;
+
     public float movementSpeed { get { return m_MovementSpeed; } }
     public KeyCode sendWaveKey { get { return m_SendWaveKey; } }
+    public float sadMovementMultiplier { get { return m_SadMovementMultiplier; } }
 }

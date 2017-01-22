@@ -5,6 +5,16 @@ public class NPCHappyBehaviour : NPCBehaviour
     Vector3 m_Origin;
     Vector3 m_MovementDirection;
 
+    public NPCHappyBehaviour(Transform transform, NPCSettings npcSettings) : base(transform, npcSettings)
+    {
+    }
+
+    public override void InitializeState()
+    {
+        m_Origin = m_Transform.position;
+        RandomizeMovementDirection();
+    }
+
     public override void UpdatePosition()
     {
         var newPosition = m_Transform.position + m_MovementDirection * m_NPCSettings.happyMovementSpeed * Time.deltaTime;
@@ -16,12 +26,6 @@ public class NPCHappyBehaviour : NPCBehaviour
         {
             m_Transform.position = newPosition;
         }
-    }
-
-    public NPCHappyBehaviour(Transform transform, NPCSettings npcSettings) : base(transform, npcSettings)
-    {
-        m_Origin = transform.position;
-        RandomizeMovementDirection();
     }
 
     void RandomizeMovementDirection()

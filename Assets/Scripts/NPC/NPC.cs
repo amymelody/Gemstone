@@ -29,6 +29,7 @@ public class NPC : MonoBehaviour, IEntity
     {
         m_Emotion = emotion;
         m_CurrentBehaviour = m_Behaviours[m_Emotion];
+        m_CurrentBehaviour.InitializeState();
         m_Renderer.color = m_EmotionSettings.GetColorFromEmotion(m_Emotion);
     }
 

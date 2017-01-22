@@ -2,11 +2,15 @@
 
 public class NPCNeutralBehaviour : NPCBehaviour
 {
-    public override void UpdatePosition()
+    public NPCNeutralBehaviour(Transform transform, NPCSettings npcSettings) : base(transform, npcSettings)
     {
     }
 
-    public NPCNeutralBehaviour(Transform transform, NPCSettings npcSettings) : base(transform, npcSettings)
+    public override void InitializeState()
+    {
+    }
+
+    public override void UpdatePosition()
     {
     }
 }
