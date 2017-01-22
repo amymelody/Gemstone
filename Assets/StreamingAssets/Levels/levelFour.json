@@ -10,7 +10,7 @@
 	"player": {
 		"x": 10,
 		"y": 5,
-		"emotion": "sad"
+		"emotion": "happy"
 	},
 	"NPCArray": [
 		{
@@ -43,7 +43,7 @@
 		},
 		{
 			"x": 20,
-			"y": 4,
+			"y": 6,
 			"emotion": "neutral",
 			"power": 1,
 			"frequency": 1
