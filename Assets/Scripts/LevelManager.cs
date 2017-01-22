@@ -20,7 +20,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     Text m_Text;
 
-    bool m_InWinState;
+    public GameManager m_GameManager;
+
+    bool m_LevelLoaded;
 
     Dictionary<Emotion, int> m_NumNPCsWithEmotion = new Dictionary<Emotion, int>
     {
@@ -40,18 +42,16 @@ public class LevelManager : MonoBehaviour
     {
         m_NumNPCsWithEmotion[oldEmotion] = m_NumNPCsWithEmotion[oldEmotion] - 1;
         m_NumNPCsWithEmotion[newEmotion] = m_NumNPCsWithEmotion[newEmotion] + 1;
-        if (m_NumNPCsWithEmotion[m_WinStateEmotion] >= m_WinStateNumNPCs && !m_InWinState)
+        if (m_NumNPCsWithEmotion[m_WinStateEmotion] >= m_WinStateNumNPCs && m_LevelLoaded)
         {
             // Win condition stuff here. Go to next level.
-            Debug.Log("WIN STATE");
-            m_InWinState = true;
+            m_LevelLoaded = false;
+            m_GameManager.LoadNextLevel();
         }
     }
 
     public void LoadLevel(Transform levelParent, JSONObject playerJSONObj, JSONObject npcsJSONObj, JSONObject obstaclesJSONobj)
     {
-        m_InWinState = false;
-
         m_Text.gameObject.SetActive(true);
         m_Text.text = "Make " + m_WinStateNumNPCs + " Neurons " + m_WinStateEmotion;
 
@@ -81,6 +81,8 @@ public class LevelManager : MonoBehaviour
             //npc.m_LevelManager = this;
             //npc.Deserialize(npcsJSONObj[i]);
         }
+
+        m_LevelLoaded = true;
     }
 
     void Awake()

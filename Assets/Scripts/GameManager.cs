@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        m_LevelManager.m_GameManager = this;
         DontDestroyOnLoad(gameObject);
         m_LevelJSONObjects = new JSONObject[m_LevelJSONs.Length];
         for (int i = 0; i < m_LevelJSONObjects.Length; ++i)
@@ -86,7 +87,7 @@ public class GameManager : MonoBehaviour
     {
         if (m_LevelParentTransform != null)
         {
-            DestroyImmediate(m_LevelParentTransform.gameObject);
+            Destroy(m_LevelParentTransform.gameObject);
         }
 
         m_LevelParentTransform = new GameObject(k_LevelParentName).transform;
