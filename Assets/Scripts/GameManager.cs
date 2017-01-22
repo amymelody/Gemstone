@@ -3,6 +3,7 @@ using System.Collections;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -41,7 +42,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < m_LevelJSONObjects.Length; ++i)
         {
             m_LevelJSONObjects[i] = new JSONObject(File.ReadAllText(
-                Application.dataPath + Path.DirectorySeparatorChar
+                Application.streamingAssetsPath + Path.DirectorySeparatorChar
                 + m_LevelJSONsFolder + Path.DirectorySeparatorChar + m_LevelJSONs[i]));
         }
         m_LevelManager = Instantiate(m_LevelManagerPrefab);
