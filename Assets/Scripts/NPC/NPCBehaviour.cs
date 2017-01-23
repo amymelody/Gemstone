@@ -5,7 +5,7 @@ public abstract class NPCBehaviour
     protected Transform m_Transform;
     protected NPCSettings m_NPCSettings;
 
-    public abstract void InitializeState();
+    public abstract void InitializeState(Player player);
     public abstract void UpdatePosition();
     public abstract void ChangeMovementDirection();
 

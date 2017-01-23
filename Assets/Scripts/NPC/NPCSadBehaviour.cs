@@ -6,7 +6,7 @@ public class NPCSadBehaviour : NPCBehaviour
     {
     }
 
-    public override void InitializeState()
+    public override void InitializeState(Player player)
     {
     }
 

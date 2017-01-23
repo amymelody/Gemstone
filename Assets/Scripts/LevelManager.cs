@@ -88,6 +88,7 @@ public class LevelManager : MonoBehaviour
         {
             var npc = Instantiate(m_NPCPrefab);
             npc.m_LevelManager = this;
+            npc.m_Player = player;
             npc.Deserialize(npcsJSONObj[i]);
             npc.transform.SetParent(levelParent, true);
         }

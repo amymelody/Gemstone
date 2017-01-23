@@ -80,6 +80,15 @@ public class GameManager : MonoBehaviour
     public void LoadNextLevel()
     {
         m_CurrentLevel++;
+        if (m_CurrentLevel >= m_LevelJSONObjects.Length)
+        {
+            if (m_LevelParentTransform != null)
+            {
+                Destroy(m_LevelParentTransform.gameObject);
+                Destroy(m_LevelManager.gameObject);
+            }
+            SceneManager.LoadScene("credits");
+        }
         LoadLevel(m_CurrentLevel);
     }
 

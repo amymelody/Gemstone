@@ -44,7 +44,8 @@ public class Player : MonoBehaviour, IEntity
         m_MovementTypes = new Dictionary<Emotion, PlayerMovement>
         {
             { Emotion.Happy, new PlayerHappyMovement(transform, m_PlayerSettings) },
-            { Emotion.Sad, new PlayerSadMovement(transform, m_PlayerSettings) }
+            { Emotion.Sad, new PlayerSadMovement(transform, m_PlayerSettings) },
+            { Emotion.Angry, new PlayerAngryMovement(transform, m_PlayerSettings) }
         };
     }
 
@@ -79,5 +80,14 @@ public class Player : MonoBehaviour, IEntity
             m_EmotionSettings.GetWavePrefabFromEmotion(m_Emotion),
             m_PlayerSettings.waveScaleRate,
             m_PlayerSettings.waveMaxDeltaScale);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        var npc = collision.gameObject.GetComponent<NPC>();
+        if (npc != null)
+        {
+            ChangeEmotion(npc.m_Emotion);
+        }
     }
 }

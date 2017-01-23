@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class NPCNeutralBehaviour : NPCBehaviour
+public class NPCAfraidBehaviour : NPCBehaviour
 {
-    public NPCNeutralBehaviour(Transform transform, NPCSettings npcSettings) : base(transform, npcSettings)
+    public NPCAfraidBehaviour(Transform transform, NPCSettings npcSettings) : base(transform, npcSettings)
     {
     }
 

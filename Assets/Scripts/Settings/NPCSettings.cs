@@ -22,9 +22,14 @@ public class NPCSettings : ScriptableObject
     [SerializeField]
     float m_HappyMovementRadius;
 
+    [Header("Angry")]
+    [SerializeField]
+    float m_AngryMovementSpeed;
+
     public float baseDelayBetweenWaves { get { return m_BaseDelayBetweenWaves; } }
     public float happyMovementSpeed { get { return m_HappyMovementSpeed; } }
     public float happyMovementRadius { get { return m_HappyMovementRadius; } }
     public float waveScaleRate { get { return m_WaveScaleRate; } }
     public float waveMaxDeltaScale { get { return m_WaveMaxDeltaScale; } }
+    public float angryMovementSpeed { get { return m_AngryMovementSpeed; } }
 }

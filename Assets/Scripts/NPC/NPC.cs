@@ -28,14 +28,16 @@ public class NPC : MonoBehaviour, IEntity
 
     Dictionary<Emotion, NPCBehaviour> m_Behaviours;
     NPCBehaviour m_CurrentBehaviour;
-    Emotion m_Emotion;
+    public Emotion m_Emotion;
+
+    public Player m_Player;
 
     public void ChangeEmotion(Emotion emotion)
     {
         var oldEmotion = m_Emotion;
         m_Emotion = emotion;
         m_CurrentBehaviour = m_Behaviours[m_Emotion];
-        m_CurrentBehaviour.InitializeState();
+        m_CurrentBehaviour.InitializeState(m_Player);
         m_Renderer.color = m_EmotionSettings.GetColorFromEmotion(m_Emotion);
         m_LevelManager.OnNPCEmotionChange(oldEmotion, m_Emotion);
     }
@@ -66,7 +68,8 @@ public class NPC : MonoBehaviour, IEntity
         {
             { Emotion.Neutral, new NPCNeutralBehaviour(transform, m_NPCSettings) },
             { Emotion.Happy, new NPCHappyBehaviour(transform, m_NPCSettings) },
-            { Emotion.Sad, new NPCSadBehaviour(transform, m_NPCSettings) }
+            { Emotion.Sad, new NPCSadBehaviour(transform, m_NPCSettings) },
+            { Emotion.Angry, new NPCAngryBehaviour(transform, m_NPCSettings) }
         };
     }
 

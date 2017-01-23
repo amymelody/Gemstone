@@ -9,7 +9,7 @@ public class NPCHappyBehaviour : NPCBehaviour
     {
     }
 
-    public override void InitializeState()
+    public override void InitializeState(Player player)
     {
         m_Origin = m_Transform.position;
         RandomizeMovementDirection();
