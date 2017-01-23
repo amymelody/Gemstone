@@ -85,7 +85,7 @@ public class Player : MonoBehaviour, IEntity
     void OnCollisionEnter2D(Collision2D collision)
     {
         var npc = collision.gameObject.GetComponent<NPC>();
-        if (npc != null)
+        if (npc != null && npc.m_Emotion != Emotion.Neutral)
         {
             ChangeEmotion(npc.m_Emotion);
         }
